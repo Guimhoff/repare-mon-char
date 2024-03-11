@@ -39,25 +39,30 @@ public class CarController : MonoBehaviour {
 		
 	}
 
-	private void Update () {
-		 
-		float targetAcceleration = Input.GetAxis("Vertical");
-		float targetSteer = Input.GetAxis("Horizontal");
+    //private void Update () {
 
-		if (Input.GetButton("Jump") || !Enable) {
-			CurrentAcceleration = 0;
-			CurrentBrake = Mathf.MoveTowards(CurrentBrake, 1, AccelerationBrakeTorque * Time.deltaTime);
-		} else {
-			CurrentAcceleration = Mathf.MoveTowards(CurrentAcceleration, targetAcceleration, AccelerationTorque * Time.deltaTime);
-			CurrentBrake = 0;
-		}
+    //	float targetAcceleration = Input.GetAxis("Vertical");
+    //	float targetSteer = Input.GetAxis("Horizontal");
 
-		if (Enable) {
-			CurrentSteer = Mathf.MoveTowards(CurrentSteer, targetSteer, AccelerationSteer * Time.deltaTime);
-		}
-	}
+    //	if (Input.GetButton("Jump") || !Enable) {
+    //		CurrentAcceleration = 0;
+    //		CurrentBrake = Mathf.MoveTowards(CurrentBrake, 1, AccelerationBrakeTorque * Time.deltaTime);
+    //	} else {
+    //		CurrentAcceleration = Mathf.MoveTowards(CurrentAcceleration, targetAcceleration, AccelerationTorque * Time.deltaTime);
+    //		CurrentBrake = 0;
+    //	}
 
-	private void FixedUpdate () {
+    //	if (Enable) {
+    //		CurrentSteer = Mathf.MoveTowards(CurrentSteer, targetSteer, AccelerationSteer * Time.deltaTime);
+    //	}
+    //}
+
+    private void Update()
+    {
+        CurrentBrake = 1;
+    }
+
+    private void FixedUpdate () {
 		WheelCollider wheelCollider;
 		for (int i = 0; i < DrivingWheels.Count; i++) {
 			wheelCollider = DrivingWheels[i].WheelCollider;
