@@ -16,8 +16,15 @@ public class DamagedWheel : MonoBehaviour
     {
         if (!wheelCollider.bounds.Intersects(ground.transform.GetComponent<Collider>().bounds))
         {
-            foreach (ScrewLogic screw in transform.parent.Find("Screw").GetComponentsInChildren<ScrewLogic>())
+            foreach (Transform child in transform.parent)
             {
+                if (child.name != "Screw")
+                {
+                    continue;
+                }
+
+                ScrewLogic screw = child.GetComponent<ScrewLogic>();
+
                 if (screw.IsScrewed)
                 {
                     return;
@@ -26,6 +33,16 @@ public class DamagedWheel : MonoBehaviour
 
             Instantiate(wheel, transform.position, transform.rotation);
             gameObject.SetActive(false);
+
+            foreach (Transform child in transform.parent)
+            {
+                if (child.name != "Screw")
+                {
+                    continue;
+                }
+
+                child.GetComponent<CapsuleCollider>().enabled = false;
+            }
         }
     }
 }
