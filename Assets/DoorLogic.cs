@@ -24,6 +24,7 @@ public class DoorLogic : MonoBehaviour
         hinge = GetComponent<HingeJoint>();
         rb = GetComponent<Rigidbody>();
         hinge.useSpring = SpringEnabled;
+        Spring = hinge.spring;
     }
 
     
@@ -35,7 +36,7 @@ public class DoorLogic : MonoBehaviour
             return;
         }
 
-        if (hinge.angle < 0f)
+        if (hinge.angle < -.1f)
         {
             hinge.limits = new JointLimits { min = 0f, max = 0f };
             IsOpen = false;
@@ -62,7 +63,7 @@ public class DoorLogic : MonoBehaviour
         }
 
         IsOpen = true;
-        hinge.limits = new JointLimits { min = LowerLimit -.1f, max = UpperLimit };
+        hinge.limits = new JointLimits { min = LowerLimit -.5f, max = UpperLimit };
         rb.angularVelocity = hinge.axis * 400f;
     }
 }
