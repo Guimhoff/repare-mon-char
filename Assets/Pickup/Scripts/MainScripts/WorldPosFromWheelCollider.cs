@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 public class WorldPosFromWheelCollider : MonoBehaviour {
 
-	[SerializeField] WheelCollider WheelCollider;
+	public WheelCollider WheelCollider;
 	[SerializeField] bool SetPosition;
 	[SerializeField] bool SetRotation;
 	[SerializeField] Vector3 OffsetPosition;
