@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 
+
 public class EngineLogic : MonoBehaviour
 {
     public ConnectorLogic connector_r_1;
@@ -13,7 +14,7 @@ public class EngineLogic : MonoBehaviour
     public ConnectorLogic connector_b_1;
     public ConnectorLogic connector_b_2;
 
-    
+    public TextMesh textMesh;
 
     public AudioSource audioSource;
 
@@ -34,15 +35,13 @@ public class EngineLogic : MonoBehaviour
         state_shortCircuit = (connector_r_1.isConnected && (connector_r_1.clipColor == connector_b_1.clipColor)) || 
                              (connector_r_2.isConnected && (connector_r_2.clipColor == connector_b_2.clipColor)); // short circuit
 
-        state_crossedCircuit = (connector_r_1.isConnected && (connector_r_1.clipColor == connector_b_1.clipColor)) ||
-                               (connector_r_2.isConnected && (connector_r_2.clipColor == connector_b_2.clipColor)); // crossed circuit
+        state_crossedCircuit = (connector_r_1.isConnected && (connector_r_1.clipColor == connector_b_2.clipColor)) ||
+                               (connector_r_2.isConnected && (connector_r_2.clipColor == connector_b_1.clipColor)); // crossed circuit
 
-        print("is Connected " + state_isConnected + "\n" +
-            "good Connection " + state_goodConnection + "\n" +
+        textMesh.text = "is Connected " + state_isConnected + "\n" +
             "good Connection " + state_goodConnection + "\n" +
             "short Circuit " + state_shortCircuit + "\n" +
-            "crossed circuit " + state_crossedCircuit + "\n");
-  
+            "crossed circuit " + state_crossedCircuit;
 
     }
 
