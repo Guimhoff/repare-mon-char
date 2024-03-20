@@ -15,6 +15,8 @@ public class ConnectorLogic : MonoBehaviour
 
     public ClipLogic[] crocodileClipArray = new ClipLogic[4];
 
+    public bool showDebug = false;
+
     public void fixCrocodileClip(ClipLogic crocodileClip)
     {
         crocodileClip.transform.position = transform.position;
@@ -50,10 +52,13 @@ public class ConnectorLogic : MonoBehaviour
 
             }
         }
-        else if (!(Vector3.Distance(transform.position, crocodileClipArray[i].transform.position) < distance_toconnect)) { 
+        else if (!(Vector3.Distance(transform.position, crocodileClipArray[index].transform.position) < distance_toconnect)) { 
             index = -1;
             isConnected = false;
             clipColor = '\0';
+        } else
+        {
+            fixCrocodileClip(crocodileClipArray[index]);
         }
     }
 

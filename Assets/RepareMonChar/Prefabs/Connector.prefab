@@ -99,7 +99,7 @@ MonoBehaviour:
   color: 47
   isConnected: 0
   clipColor: 87
-  distance_toconnect: 0.1
+  distance_toconnect: 0.05
   crocodileClipArray:
   - {fileID: 0}
   - {fileID: 0}
