@@ -4,28 +4,63 @@ using Unity.XR.CoreUtils;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
 public class EngineLogic : MonoBehaviour
 {
-    public BatteryLogic connector_a;
-    public BatteryLogic connector_b;
-    public BatteryLogic connector_c;
-    public BatteryLogic connector_d;
+    public ConnectorLogic connector_r_1;
+    public ConnectorLogic connector_r_2;
+
+    public ConnectorLogic connector_b_1;
+    public ConnectorLogic connector_b_2;
+
+    
+
     public AudioSource audioSource;
-     
+
+    bool state_isConnected = false;
+
+    bool state_goodConnection = false; // the connectors are connected to the same colors
+
+    bool state_shortCircuit = false; // short circuit
+
+    bool state_crossedCircuit = false; // crossed circuit
 
     private void FixedUpdate()
     {
-       
+        state_isConnected = connector_r_1.isConnected && connector_r_2.isConnected && connector_b_1.isConnected && connector_b_2.isConnected;
+
+        state_goodConnection = (connector_r_1.clipColor == connector_r_2.clipColor) && state_isConnected; // the connectors are connected to the same colors
+
+        state_shortCircuit = (connector_r_1.isConnected && (connector_r_1.clipColor == connector_b_1.clipColor)) || 
+                             (connector_r_2.isConnected && (connector_r_2.clipColor == connector_b_2.clipColor)); // short circuit
+
+        state_crossedCircuit = (connector_r_1.isConnected && (connector_r_1.clipColor == connector_b_1.clipColor)) ||
+                               (connector_r_2.isConnected && (connector_r_2.clipColor == connector_b_2.clipColor)); // crossed circuit
+
+        print("is Connected " + state_isConnected + "\n" +
+            "good Connection " + state_goodConnection + "\n" +
+            "good Connection " + state_goodConnection + "\n" +
+            "short Circuit " + state_shortCircuit + "\n" +
+            "crossed circuit " + state_crossedCircuit + "\n");
+  
+
     }
 
     public void checkEngine()
     {
-        bool state = connector_a.isConnected && connector_b.isConnected && connector_c.isConnected && connector_d.isConnected;
-        print(state);
 
-        if (state)
+        print("All the battery connectors are connected: " + state_isConnected);
+
+        if (state_goodConnection)
         {
+            print("The connectors are connected to the same color cables: " + state_goodConnection);
             audioSource.Play();
+        } else if (state_shortCircuit)
+        {
+            print("Short circuited the battery");
+        } else if (state_crossedCircuit)
+        {
+            print("The circuit is crossed beware");
         }
  
 
