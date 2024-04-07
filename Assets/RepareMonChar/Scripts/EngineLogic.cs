@@ -26,22 +26,41 @@ public class EngineLogic : MonoBehaviour
 
     bool state_crossedCircuit = false; // crossed circuit
 
+    public bool debug_text = false; 
+
     private void FixedUpdate()
     {
         state_isConnected = connector_r_1.isConnected && connector_r_2.isConnected && connector_b_1.isConnected && connector_b_2.isConnected;
 
         state_goodConnection = (connector_r_1.clipColor == connector_r_2.clipColor) && state_isConnected; // the connectors are connected to the same colors
 
-        state_shortCircuit = (connector_r_1.isConnected && (connector_r_1.clipColor == connector_b_1.clipColor)) || 
+        state_shortCircuit = (connector_r_1.isConnected && (connector_r_1.clipColor == connector_b_1.clipColor)) ||
                              (connector_r_2.isConnected && (connector_r_2.clipColor == connector_b_2.clipColor)); // short circuit
 
         state_crossedCircuit = (connector_r_1.isConnected && (connector_r_1.clipColor == connector_b_2.clipColor)) ||
                                (connector_r_2.isConnected && (connector_r_2.clipColor == connector_b_1.clipColor)); // crossed circuit
 
+        /*
         textMesh.text = "is Connected " + state_isConnected + "\n" +
             "good Connection " + state_goodConnection + "\n" +
             "short Circuit " + state_shortCircuit + "\n" +
             "crossed circuit " + state_crossedCircuit;
+        */
+
+        string problem = "";
+    
+        if (state_shortCircuit || state_crossedCircuit || debug_text)
+        {
+            problem = state_shortCircuit ? "Short Circuit" : "";
+
+            problem = debug_text ? "debug" : state_shortCircuit ? "Court circuit" : "Circuit croisé";
+
+            textMesh.text = "Attention :\n" + problem;
+        }
+        else
+        {
+            textMesh.text = "";
+        }
 
     }
 
