@@ -7,50 +7,25 @@ using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
 using UnityEngine.XR.Interaction.Toolkit;
 
-[ExecuteInEditMode]
 public class ObjectivesSystem : MonoBehaviour
 {
-    protected static ObjectivesSystem objectivesSystem;
-
-    public static void Create()
-    {
-        if (objectivesSystem != null)
-        {
-            Debug.LogError("An objectives system already exists");
-            return;
-        }
-
-        var gameController = new GameObject();
-        gameController.name = "Game Controller";
-        gameController.transform.SetAsFirstSibling();
-        objectivesSystem = gameController.AddComponent<ObjectivesSystem>();
-    }
-
-    public static ObjectivesSystem Get()
-    {
-        if (objectivesSystem.IsDestroyed())
-            objectivesSystem = null;
-
-        return objectivesSystem;
-    }
-
-    public List<Objective> objectives = new();
-
-    public void NewObjective()
-    {
-        objectives.Add(new());
-    }
-
-
-
-
+    public List<Objective> objectives;
+    public int currentObjective = 0;
 
     private void Update()
     {
-        //foreach (Objectives objective in objectives)
-        //{
-        //    objective.Update();
-        //}
+        if (currentObjective > objectives.Count - 1)
+            return;
+
+        if (objectives[currentObjective].IsComplete())
+            NextObjective();
+    }
+
+    private void NextObjective()
+    {
+        objectives[currentObjective].RemoveCurrentObjective();
+        currentObjective++;
+        objectives[currentObjective].SetCurrentObjective();
     }
 
 }

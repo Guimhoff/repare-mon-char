@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Objective
+public abstract class Objective: MonoBehaviour
 {
-    public Component component;
+    public string text;
 
-
-    public string displayObjective;
+    public virtual void SetCurrentObjective() { }
+    public virtual void RemoveCurrentObjective() { }
+    public abstract bool IsComplete();
 }
