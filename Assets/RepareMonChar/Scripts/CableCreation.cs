@@ -8,6 +8,8 @@ public class CableCreation : MonoBehaviour
     public GameObject startNode; // GameObject représentant le début du câble
     public GameObject endNode; // GameObject représentant la fin du câble
 
+    public float springForce = 1f; // Force du ressort
+
     public int numberOfLinks; // Nombre de maillons du câble
 
     public float lineWidth = 0.1f; // Épaisseur du câble
@@ -57,25 +59,31 @@ public class CableCreation : MonoBehaviour
 
             link.transform.position = Vector3.Lerp(startNode.transform.position, endNode.transform.position, (float)i / (numberOfLinks - 1)); // Positionner le maillon le long du câble
             cableLinks[i] = link; // Ajouter le maillon au tableau
-
-            // Ajouter et configurer le script CableLinkLogic
-            CableLinkLogic cableLinkLogic = link.AddComponent<CableLinkLogic>();
-            cableLinkLogic.objectA = i > 0 ? cableLinks[i - 1] : null; // L'objet A est le maillon précédent, sauf pour le premier maillon
-            cableLinkLogic.objectB = i < numberOfLinks - 1 ? cableLinks[i + 1] : null; // L'objet B est le maillon suivant, sauf pour le dernier maillon
         }
 
         // Créer le dernier maillon attaché à la fin du câble
         cableLinks[numberOfLinks - 1] = endNode;
 
+        for (int i = 1; i < numberOfLinks - 1; i++)
+        {
+            // Ajouter et configurer le script CableLinkLogic
+            CableLinkLogic cableLinkLogic = cableLinks[i].AddComponent<CableLinkLogic>();
+            cableLinkLogic.objectA = i > 0 ? cableLinks[i - 1] : null; // L'objet A est le maillon précédent, sauf pour le premier maillon
+            cableLinkLogic.objectB = i < numberOfLinks - 1 ? cableLinks[i + 1] : null; // L'objet B est le maillon suivant, sauf pour le dernier maillon
+            cableLinkLogic.springForce = springForce;
+        }
+
         // Ajouter et configurer le script CableLinkLogic pour le premier maillon (startNode)
         CableLinkLogic startNodeLogic = startNode.AddComponent<CableLinkLogic>();
         startNodeLogic.objectA = cableLinks[1]; // L'objet A du dernier maillon est le maillon précédent
         startNodeLogic.objectB = null; // L'objet B du dernier maillon est null
+        startNodeLogic.springForce = springForce;
 
         // Ajouter et configurer le script CableLinkLogic pour le dernier maillon (endNode)
         CableLinkLogic endNodeLogic = endNode.AddComponent<CableLinkLogic>();
         endNodeLogic.objectA = cableLinks[numberOfLinks - 2]; // L'objet A du dernier maillon est le maillon précédent
         endNodeLogic.objectB = null; // L'objet B du dernier maillon est null
+        endNodeLogic.springForce = springForce;
 
         // Ajouter les Line Renderers pour tracer le câble
         lineRenderers = new LineRenderer[numberOfLinks - 1]; // Créer le tableau de Line Renderers
