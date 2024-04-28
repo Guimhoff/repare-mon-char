@@ -23,6 +23,7 @@ public class GameManagementSystem : MonoBehaviour
     public string loadingText;
 
     [Header("Freeplay")]
+    public string freeplayText;
 
     [Header("Step by step")]
 
@@ -37,6 +38,15 @@ public class GameManagementSystem : MonoBehaviour
 
     //[Header("Timed")]
 
+    private void Start()
+    {
+        if (gameMode != GameMode.StepByStep)
+        {
+            highlightConfigurable = false;
+            highlight = false;
+            RaiseHighlightChangeEvent();
+        }
+    }
 
     private void Update()
     {
@@ -74,6 +84,9 @@ public class GameManagementSystem : MonoBehaviour
 
     public string GetObjectiveText()
     {
+        if (gameMode == GameMode.Freeplay)
+            return freeplayText;
+
         if (currentObjective < 0)
             return loadingText;
 
@@ -87,6 +100,9 @@ public class GameManagementSystem : MonoBehaviour
 
     public void SetHighlightOn()
     {
+        if (!highlightConfigurable)
+            return;
+
         if (currentObjective >= 0 && currentObjective < objectives.Count)
             objectives[currentObjective].SetCurrentObjective(this);
 
@@ -109,7 +125,7 @@ public class GameManagementSystem : MonoBehaviour
 
     protected virtual void RaiseHighlightChangeEvent()
     {
-        HighlightChangeEvent?.Invoke(this, new HighlightChangeEventArgs(highlight));
+        HighlightChangeEvent?.Invoke(this, new HighlightChangeEventArgs(highlight, highlightConfigurable));
     }
 
     // Timed

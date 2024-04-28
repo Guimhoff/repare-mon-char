@@ -21,7 +21,7 @@ public class ObjectiveDisplay : MonoBehaviour
         GMSystem.NewObjectiveEvent += HandleNewObjectiveEvent;
         GMSystem.HighlightChangeEvent += HandleHighlightChangeEvent;
 
-        UpdateButtonDisplay(GMSystem.highlight);
+        UpdateButtonDisplay(GMSystem.highlight, GMSystem.highlightConfigurable);
     }
 
     void HandleNewObjectiveEvent(object sender, NewObjectiveEventArgs e)
@@ -31,13 +31,17 @@ public class ObjectiveDisplay : MonoBehaviour
 
     void HandleHighlightChangeEvent(object sender, HighlightChangeEventArgs e)
     {
-        UpdateButtonDisplay(e.IsOn);
+        UpdateButtonDisplay(e.IsOn, e.IsConfigurable);
     }
 
-    private void UpdateButtonDisplay(bool isOn)
+    private void UpdateButtonDisplay(bool isOn, bool isConfigurable)
     {
-        if (!GMSystem.highlightConfigurable)
+        if (!isConfigurable)
+        {
+            buttonOn.SetActive(false);
+            buttonOff.SetActive(false);
             return;
+        }
 
         if (isOn)
         {
