@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 public class ObjectiveDisplay : MonoBehaviour
 {
@@ -12,19 +13,22 @@ public class ObjectiveDisplay : MonoBehaviour
 
     public GameObject buttonOn;
     public GameObject buttonOff;
+    public GameObject startButton;
 
     private void Start()
     {
         textMesh = GetComponent<TextMeshProUGUI>();
-        textMesh.text = GMSystem.GetObjectiveText();
+        textMesh.text = GMSystem.GetDisplayText();
 
-        GMSystem.NewObjectiveEvent += HandleNewObjectiveEvent;
+        GMSystem.NewDisplayEvent += HandleNewObjectiveEvent;
         GMSystem.HighlightChangeEvent += HandleHighlightChangeEvent;
+        GMSystem.TimerStateEvent += HandleTimerStateEvent;
 
         UpdateButtonDisplay(GMSystem.highlight, GMSystem.highlightConfigurable);
+        UpdateStartButtonDisplay(GMSystem.TimerState);
     }
 
-    void HandleNewObjectiveEvent(object sender, NewObjectiveEventArgs e)
+    void HandleNewObjectiveEvent(object sender, NewDisplayEventArgs e)
     {
         textMesh.text = e.Text;
     }
@@ -55,6 +59,22 @@ public class ObjectiveDisplay : MonoBehaviour
         }
     }
 
+    void HandleTimerStateEvent(object sender, TimerStateEventArgs e)
+    {
+        UpdateStartButtonDisplay(e.TimerState);
+    }
+
+    private void UpdateStartButtonDisplay(TimerState timerState)
+    {
+        if (timerState == TimerState.Zeroed)
+        {
+            startButton.SetActive(true);
+            return;
+        }
+
+        startButton.SetActive(false);
+    }
+
     public void ButtonOnAction()
     {
         GMSystem.SetHighlightOff();
@@ -75,4 +95,8 @@ public class ObjectiveDisplay : MonoBehaviour
         GMSystem.ReloadScene();
     }
 
+    public void StartButtonAction()
+    {
+        GMSystem.StartTimer();
+    }
 }

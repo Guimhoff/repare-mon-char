@@ -344,6 +344,10 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 4758931602511846861, guid: ca00285e9f3f3ca4ba20d6d14a34b808, type: 3}
+      propertyPath: gameMode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4758931602511846861, guid: ca00285e9f3f3ca4ba20d6d14a34b808, type: 3}
       propertyPath: loadingText
       value: Chargement...
       objectReference: {fileID: 0}
@@ -355,6 +359,18 @@ PrefabInstance:
       propertyPath: objectives.Array.data[0]
       value: 
       objectReference: {fileID: 165395572}
+    - target: {fileID: 4758931602511846861, guid: ca00285e9f3f3ca4ba20d6d14a34b808, type: 3}
+      propertyPath: FreezedObjects.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4758931602511846861, guid: ca00285e9f3f3ca4ba20d6d14a34b808, type: 3}
+      propertyPath: FreezedObjects.Array.data[1]
+      value: 
+      objectReference: {fileID: 864429530}
+    - target: {fileID: 4758931602511846861, guid: ca00285e9f3f3ca4ba20d6d14a34b808, type: 3}
+      propertyPath: FreezedObjects.Array.data[2]
+      value: 
+      objectReference: {fileID: 699647155}
     - target: {fileID: 4821369809604988774, guid: ca00285e9f3f3ca4ba20d6d14a34b808, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -686,6 +702,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &864429530 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5768063896495507496, guid: 13010ff4901fdbb419e35ca3a237c1b4, type: 3}
+  m_PrefabInstance: {fileID: 165395570}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1004877004
 PrefabInstance:
   m_ObjectHideFlags: 0

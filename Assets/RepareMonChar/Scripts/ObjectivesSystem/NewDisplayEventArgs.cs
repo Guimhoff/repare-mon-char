@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewObjectiveEventArgs
+public class NewDisplayEventArgs
 {
-    public NewObjectiveEventArgs(string text) { Text = text; }
+    public NewDisplayEventArgs(string text) { Text = text; }
     public string Text { get; }
 }

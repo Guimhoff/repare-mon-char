@@ -215,6 +215,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameMode: 0
   loadingText: 
+  freeplayText: 
   objectivesCompleted: Bravo, vous avez accompli tous les objectifs !
   objectives:
   - {fileID: 0}
@@ -222,6 +223,8 @@ MonoBehaviour:
   highlightConfigurable: 1
   highlight: 0
   highlighted: {fileID: 2100000, guid: 677549b854c258b429b77a80480acd1d, type: 2}
+  FreezedObjects:
+  - {fileID: 5836401307045452563}
 --- !u!1 &8926237126007840283
 GameObject:
   m_ObjectHideFlags: 0
@@ -418,6 +421,11 @@ MonoBehaviour:
     mipBias: 0
     varianceClampScale: 0.9
     contrastAdaptiveSharpening: 0
+--- !u!1 &5836401307045452563 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5167925059111895691, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+  m_PrefabInstance: {fileID: 1677371393452644760}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4299422700415036586
 PrefabInstance:
   m_ObjectHideFlags: 0
