@@ -14,6 +14,8 @@ public class ObjectivesSystem : MonoBehaviour
     public List<Objective> objectives;
     public int currentObjective = -1;
 
+    public bool highlightConfigurable;
+    public bool highlight;
     public Material highlighted;
 
     private void Update()
@@ -35,8 +37,11 @@ public class ObjectivesSystem : MonoBehaviour
         if (currentObjective >= objectives.Count)
             return;
 
-        objectives[currentObjective].SetCurrentObjective(this);
+        if (highlight)
+            objectives[currentObjective].SetCurrentObjective(this);
     }
+
+    // Objectives display
 
     public delegate void NewObjectiveEventHandler(object sender, NewObjectiveEventArgs e);
 
@@ -54,4 +59,34 @@ public class ObjectivesSystem : MonoBehaviour
 
         return objectives[currentObjective].text;
     }
+
+    // Highlight config
+
+    public void SetHighlightOn()
+    {
+        if (currentObjective >= 0 && currentObjective < objectives.Count)
+            objectives[currentObjective].SetCurrentObjective(this);
+
+        highlight = true;
+        RaiseHighlightChangeEvent();
+    }
+
+    public void SetHighlightOff()
+    {
+        if (currentObjective >= 0 && currentObjective < objectives.Count)
+            objectives[currentObjective].RemoveCurrentObjective(this);
+
+        highlight = false;
+        RaiseHighlightChangeEvent();
+    }
+
+    public delegate void HighlightChangeEventHandler(object sender, HighlightChangeEventArgs e);
+
+    public event HighlightChangeEventHandler HighlightChangeEvent;
+
+    protected virtual void RaiseHighlightChangeEvent()
+    {
+        HighlightChangeEvent?.Invoke(this, new HighlightChangeEventArgs(highlight));
+    }
+
 }
