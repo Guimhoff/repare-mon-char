@@ -688,7 +688,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 499699716013461473, guid: ca00285e9f3f3ca4ba20d6d14a34b808, type: 3}
       propertyPath: m_Name
-      value: Complete XR Origin Set Up
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 4758931602511846861, guid: ca00285e9f3f3ca4ba20d6d14a34b808, type: 3}
       propertyPath: highlighted
