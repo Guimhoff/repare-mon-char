@@ -1,14 +1,31 @@
 using SerializableCallback;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class ObjectivesSystem : MonoBehaviour
+public enum GameMode
 {
+    Freeplay,
+    StepByStep,
+    timed,
+}
+
+public class GameManagementSystem : MonoBehaviour
+{
+    public GameMode gameMode;
+
+    public string loadingText;
+
+    [Header("Freeplay")]
+
+    [Header("Step by step")]
+
     public string objectivesCompleted;
 
     public List<Objective> objectives;
@@ -17,6 +34,9 @@ public class ObjectivesSystem : MonoBehaviour
     public bool highlightConfigurable;
     public bool highlight;
     public Material highlighted;
+
+    //[Header("Timed")]
+
 
     private void Update()
     {
@@ -54,6 +74,9 @@ public class ObjectivesSystem : MonoBehaviour
 
     public string GetObjectiveText()
     {
+        if (currentObjective < 0)
+            return loadingText;
+
         if (currentObjective >= objectives.Count)
             return objectivesCompleted;
 
@@ -87,6 +110,33 @@ public class ObjectivesSystem : MonoBehaviour
     protected virtual void RaiseHighlightChangeEvent()
     {
         HighlightChangeEvent?.Invoke(this, new HighlightChangeEventArgs(highlight));
+    }
+
+    // Timed
+
+
+
+    // Scenes
+    
+    public void LoadMenuScene()
+    {
+        // TODO
+    }
+
+    public void ReloadScene()
+    {
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        StartCoroutine(LoadScene(currentSceneName));
+    }
+
+    IEnumerator LoadScene(string scene)
+    {
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(scene);
+
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
     }
 
 }

@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 
 public class ObjectiveDisplay : MonoBehaviour
 {
-    public ObjectivesSystem objectivesSystem;
+    public GameManagementSystem GMSystem;
     private TextMeshProUGUI textMesh;
 
     public GameObject buttonOn;
@@ -15,12 +16,12 @@ public class ObjectiveDisplay : MonoBehaviour
     private void Start()
     {
         textMesh = GetComponent<TextMeshProUGUI>();
-        textMesh.text = objectivesSystem.GetObjectiveText();
+        textMesh.text = GMSystem.GetObjectiveText();
 
-        objectivesSystem.NewObjectiveEvent += HandleNewObjectiveEvent;
-        objectivesSystem.HighlightChangeEvent += HandleHighlightChangeEvent;
+        GMSystem.NewObjectiveEvent += HandleNewObjectiveEvent;
+        GMSystem.HighlightChangeEvent += HandleHighlightChangeEvent;
 
-        UpdateButtonDisplay(objectivesSystem.highlight);
+        UpdateButtonDisplay(GMSystem.highlight);
     }
 
     void HandleNewObjectiveEvent(object sender, NewObjectiveEventArgs e)
@@ -35,7 +36,7 @@ public class ObjectiveDisplay : MonoBehaviour
 
     private void UpdateButtonDisplay(bool isOn)
     {
-        if (!objectivesSystem.highlightConfigurable)
+        if (!GMSystem.highlightConfigurable)
             return;
 
         if (isOn)
@@ -52,11 +53,22 @@ public class ObjectiveDisplay : MonoBehaviour
 
     public void ButtonOnAction()
     {
-        objectivesSystem.SetHighlightOff();
+        GMSystem.SetHighlightOff();
     }
 
     public void ButtonOffAction()
     {
-        objectivesSystem.SetHighlightOn();
+        GMSystem.SetHighlightOn();
     }
+
+    public void MenuButtonAction()
+    {
+        GMSystem.LoadMenuScene();
+    }
+
+    public void ResetButtonAction()
+    {
+        GMSystem.ReloadScene();
+    }
+
 }

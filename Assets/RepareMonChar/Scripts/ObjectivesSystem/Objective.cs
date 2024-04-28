@@ -8,7 +8,7 @@ public abstract class Objective: MonoBehaviour
 {
     public string text;
 
-    public virtual void SetCurrentObjective(ObjectivesSystem os)
+    public virtual void SetCurrentObjective(GameManagementSystem os)
     {
         MeshRenderer renderer = GetComponent<MeshRenderer>();
         if (renderer == null)
@@ -17,7 +17,7 @@ public abstract class Objective: MonoBehaviour
         renderer.AddMaterial(os.highlighted);
     }
 
-    public virtual void RemoveCurrentObjective(ObjectivesSystem os)
+    public virtual void RemoveCurrentObjective(GameManagementSystem os)
     {
         MeshRenderer renderer = GetComponent<MeshRenderer>();
         if (renderer == null)

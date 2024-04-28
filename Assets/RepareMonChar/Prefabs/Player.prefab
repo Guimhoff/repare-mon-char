@@ -213,6 +213,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9597564ad9f42c94fb0003a15d0a37fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameMode: 0
+  loadingText: 
   objectivesCompleted: Bravo, vous avez accompli tous les objectifs !
   objectives:
   - {fileID: 0}
@@ -424,6 +426,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1677371393251626632}
     m_Modifications:
+    - target: {fileID: 6228781580426260190, guid: 6039ded088bf9b241b55a7b624c129da, type: 3}
+      propertyPath: GMSystem
+      value: 
+      objectReference: {fileID: 4758931602511846861}
     - target: {fileID: 6228781580426260190, guid: 6039ded088bf9b241b55a7b624c129da, type: 3}
       propertyPath: objectivesSystem
       value: 
