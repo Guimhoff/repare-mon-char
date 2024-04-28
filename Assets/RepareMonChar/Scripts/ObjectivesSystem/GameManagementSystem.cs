@@ -206,7 +206,7 @@ public class GameManagementSystem : MonoBehaviour
 
     private string FormatTime(TimeSpan timeSpan)
     {
-        return Mathf.Floor((float)timeSpan.TotalMinutes).ToString() + ":" + timeSpan.Seconds.ToString() + "." + timeSpan.Milliseconds.ToString();
+        return ((int)Mathf.Floor((float)timeSpan.TotalMinutes)).ToString("D2") + ":" + timeSpan.Seconds.ToString("D2") + "." + timeSpan.Milliseconds.ToString("D3");
     }
 
     public void EndTimer()
@@ -216,6 +216,7 @@ public class GameManagementSystem : MonoBehaviour
 
         TimerState = TimerState.Finished;
         time = TimeSpan.FromSeconds(Time.realtimeSinceStartupAsDouble - startTime);
+        RaiseTimerStateEvent();
     }
 
     public delegate void TimerStateEventHandler(object sender, TimerStateEventArgs e);

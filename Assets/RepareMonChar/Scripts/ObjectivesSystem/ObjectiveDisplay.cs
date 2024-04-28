@@ -62,6 +62,21 @@ public class ObjectiveDisplay : MonoBehaviour
     void HandleTimerStateEvent(object sender, TimerStateEventArgs e)
     {
         UpdateStartButtonDisplay(e.TimerState);
+
+        if (e.TimerState == TimerState.Started)
+        {
+            RectTransform comp = GetComponent<RectTransform>();
+            comp.sizeDelta = new Vector2(60, 40);
+            textMesh.fontSize = 12;
+            textMesh.alignment = TextAlignmentOptions.MidlineLeft;
+        }
+        else
+        {
+            RectTransform comp = GetComponent<RectTransform>();
+            comp.sizeDelta = new Vector2(90, 40);
+            textMesh.fontSize = 6;
+            textMesh.alignment = TextAlignmentOptions.Center;
+        }
     }
 
     private void UpdateStartButtonDisplay(TimerState timerState)
