@@ -2,18 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnscrewWhellObjective : Objective
+public class OpenDoorObjective : Objective
 {
-    private WheelSocket wheelSocket;
+    private DoorLogic door;
 
     private void Start()
     {
-        wheelSocket = GetComponent<WheelSocket>();
+        door = GetComponent<DoorLogic>();
     }
 
     public override bool IsComplete()
     {
-        return wheelSocket.IsFree();
+        return door.IsOpen;
     }
 
 }
