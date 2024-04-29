@@ -2597,7 +2597,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6165a260ff8a07448b77d680dd1c45b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  text: Attach la nouvelle roue
+  text: Attache la nouvelle roue
 --- !u!1001 &2133743325
 PrefabInstance:
   m_ObjectHideFlags: 0

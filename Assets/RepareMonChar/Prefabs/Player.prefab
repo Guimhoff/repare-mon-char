@@ -215,8 +215,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameMode: 0
   loadingText: Chargement...
-  freeplayText: "Mode jeu libre : explorez \xE0 votre guise"
-  objectivesCompleted: Bravo, vous avez accompli tous les objectifs !
+  freeplayText: "Mode jeu libre : explore \xE0 ta guise"
+  objectivesCompleted: Bravo, tu as accompli tous les objectifs !
   objectives: []
   currentObjective: -1
   highlightConfigurable: 1
