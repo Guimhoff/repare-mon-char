@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.16218954, g: 0.18880385, b: 0.21108672, a: 1}
+  m_IndirectSpecularColor: {r: 0.16218916, g: 0.18880342, b: 0.21108593, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -953,7 +953,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4758931602511846861, guid: ca00285e9f3f3ca4ba20d6d14a34b808, type: 3}
       propertyPath: objectives.Array.size
-      value: 5
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4758931602511846861, guid: ca00285e9f3f3ca4ba20d6d14a34b808, type: 3}
       propertyPath: objectives.Array.data[0]
@@ -975,6 +975,14 @@ PrefabInstance:
       propertyPath: objectives.Array.data[4]
       value: 
       objectReference: {fileID: 1419435288}
+    - target: {fileID: 4758931602511846861, guid: ca00285e9f3f3ca4ba20d6d14a34b808, type: 3}
+      propertyPath: objectives.Array.data[5]
+      value: 
+      objectReference: {fileID: 995027480}
+    - target: {fileID: 4758931602511846861, guid: ca00285e9f3f3ca4ba20d6d14a34b808, type: 3}
+      propertyPath: objectives.Array.data[6]
+      value: 
+      objectReference: {fileID: 1548042749}
     - target: {fileID: 4821369809604988774, guid: ca00285e9f3f3ca4ba20d6d14a34b808, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.38
@@ -1402,8 +1410,8 @@ Transform:
   m_GameObject: {fileID: 800906632}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.52, y: 0, z: 3}
-  m_LocalScale: {x: 0.02, y: 0.02, z: 0.02}
+  m_LocalPosition: {x: 0, y: 0, z: 3}
+  m_LocalScale: {x: 0.03, y: 0.03, z: 0.03}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 622558772}
@@ -1618,6 +1626,19 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a8dac81cf9705df4f81e60bde5399b2d, type: 3}
+--- !u!114 &995027480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1548042744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a972ab1686fb4db429f9dacc151efa34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: "Ouvre la porti\xE8re c\xF4t\xE9 conducteur de la voiture en panne"
 --- !u!1001 &1005417004
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1734,7 +1755,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 258460792181554920, guid: 13010ff4901fdbb419e35ca3a237c1b4, type: 3}
   m_PrefabInstance: {fileID: 1548042741}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1548042744}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ab743e4f66062f146a851f867867c1df, type: 3}
@@ -2303,6 +2324,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6743525692680886340, guid: 13010ff4901fdbb419e35ca3a237c1b4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1548042746}
+    - targetCorrespondingSourceObject: {fileID: 6743525692680886340, guid: 13010ff4901fdbb419e35ca3a237c1b4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1548042750}
+    - targetCorrespondingSourceObject: {fileID: 6743525692680886340, guid: 13010ff4901fdbb419e35ca3a237c1b4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1548042749}
+    - targetCorrespondingSourceObject: {fileID: 5091742734827604431, guid: 13010ff4901fdbb419e35ca3a237c1b4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 995027480}
     - targetCorrespondingSourceObject: {fileID: 8546005538870247050, guid: 13010ff4901fdbb419e35ca3a237c1b4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1825869977}
@@ -2315,6 +2345,11 @@ GameObject:
 --- !u!1 &1548042743 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6743525692680886340, guid: 13010ff4901fdbb419e35ca3a237c1b4, type: 3}
+  m_PrefabInstance: {fileID: 1548042741}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1548042744 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5091742734827604431, guid: 13010ff4901fdbb419e35ca3a237c1b4, type: 3}
   m_PrefabInstance: {fileID: 1548042741}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &1548042745
@@ -2498,8 +2533,8 @@ MonoBehaviour:
   m_SelectEntered:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1548042747}
-        m_TargetAssemblyTypeName: EngineLogic, Assembly-CSharp
+      - m_Target: {fileID: 1548042750}
+        m_TargetAssemblyTypeName: DeadEngineLogic, Assembly-CSharp
         m_MethodName: checkEngine
         m_Mode: 1
         m_Arguments:
@@ -2561,6 +2596,35 @@ MonoBehaviour:
   m_OnDeactivate:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1548042749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1548042743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f83e605d4f208c47b95561561ffe144, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: "Tourne la clef de la voiture en panne (la batterie est assez charg\xE9e
+    pour faire tourner le moteur)"
+--- !u!114 &1548042750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1548042743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74864dd68b3de59478a9ec159cab4c30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  engine: {fileID: 1419435276}
+  audioSource: {fileID: 1548042746}
+  keyTurned: 0
 --- !u!1 &1637458931 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8879494631582273689, guid: 840461d82d9ae2748806f4d3e73d590b, type: 3}
