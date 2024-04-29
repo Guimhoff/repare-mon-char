@@ -217,8 +217,7 @@ MonoBehaviour:
   loadingText: Chargement...
   freeplayText: "Mode jeu libre : explorez \xE0 votre guise"
   objectivesCompleted: Bravo, vous avez accompli tous les objectifs !
-  objectives:
-  - {fileID: 0}
+  objectives: []
   currentObjective: -1
   highlightConfigurable: 1
   highlight: 0
