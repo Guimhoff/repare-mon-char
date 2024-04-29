@@ -20,13 +20,15 @@ public class EngineLogic : MonoBehaviour
 
     bool state_isConnected = false;
 
-    bool state_goodConnection = false; // the connectors are connected to the same colors
+    public bool state_goodConnection = false; // the connectors are connected to the same colors
 
     bool state_shortCircuit = false; // short circuit
 
     bool state_crossedCircuit = false; // crossed circuit
 
-    public bool debug_text = false; 
+    public bool debug_text = false;
+
+    public bool keyTurned = false;
 
     private void FixedUpdate()
     {
@@ -73,6 +75,7 @@ public class EngineLogic : MonoBehaviour
         {
             print("The connectors are connected to the same color cables: " + state_goodConnection);
             audioSource.Play();
+            keyTurned = true;
         } else if (state_shortCircuit)
         {
             print("Short circuited the battery");
