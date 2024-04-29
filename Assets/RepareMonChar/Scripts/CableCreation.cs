@@ -15,6 +15,7 @@ public class CableCreation : MonoBehaviour
 
     public float lineWidth = 0.1f; // Épaisseur du câble
     public Color lineColor = Color.white; // Couleur du câble
+    public Material lineMaterial; // Matériau pour les Line Renderers
 
     public Mesh sphereMesh; // Mesh de la sphère à utiliser
 
@@ -57,6 +58,9 @@ public class CableCreation : MonoBehaviour
         {
             GameObject link = new GameObject("CableLink_" + i); // Créer un GameObject pour le maillon
 
+            // Ajouter le parent à l'objet qui contient ce script
+            link.transform.SetParent(transform);
+
             // Ajouter un MeshFilter et assigner le mesh de la sphère
             MeshFilter meshFilter = link.AddComponent<MeshFilter>();
             meshFilter.mesh = sphereMesh; // Assigner le mesh de la sphère fourni
@@ -68,8 +72,8 @@ public class CableCreation : MonoBehaviour
             Rigidbody linkRigidbody = link.AddComponent<Rigidbody>(); // Ajouter un composant Rigidbody pour la physique
             linkRigidbody.mass = linkMass; // Ajout de sa masse
 
-            SphereCollider collider = link.AddComponent<SphereCollider>(); // Ajouter un composant Collider
-            collider.radius = 1 / 2f; // Définir le rayon du collider selon l'épaisseur du câble
+            BoxCollider collider = link.AddComponent<BoxCollider>(); // Ajouter un composant BoxCollider
+            collider.size = new Vector3(1, 1, 1); // Définir la taille du collider selon l'épaisseur du câble
 
             // Mettre à l'échelle la sphère pour correspondre à l'épaisseur du câble
             link.transform.localScale = new Vector3(lineWidth, lineWidth, lineWidth);
@@ -118,6 +122,9 @@ public class CableCreation : MonoBehaviour
             lineRenderer.endColor = lineColor;
             lineRenderer.SetPosition(0, link.transform.position); // Position du début du segment
             lineRenderer.SetPosition(1, cableLinks[i + 1].transform.position); // Position de fin du segment
+
+            lineRenderer.material = lineMaterial;
+
             lineRenderers[i] = lineRenderer; // Ajouter le Line Renderer au tableau
         }
     }

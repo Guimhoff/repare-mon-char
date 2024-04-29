@@ -225,6 +225,7 @@ MonoBehaviour:
   highlighted: {fileID: 2100000, guid: 677549b854c258b429b77a80480acd1d, type: 2}
   FreezedObjects:
   - {fileID: 5836401307045452563}
+  TimerState: 0
 --- !u!1 &8926237126007840283
 GameObject:
   m_ObjectHideFlags: 0
