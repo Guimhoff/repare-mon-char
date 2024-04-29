@@ -9,11 +9,16 @@ public class CableCreation : MonoBehaviour
     public GameObject endNode; // GameObject représentant la fin du câble
 
     public float springForce = 1f; // Force du ressort
+    public float distance = 0.25f;
 
     public int numberOfLinks; // Nombre de maillons du câble
 
     public float lineWidth = 0.1f; // Épaisseur du câble
     public Color lineColor = Color.white; // Couleur du câble
+
+    public Mesh sphereMesh; // Mesh de la sphère à utiliser
+
+    public float linkMass = 1f; // Masse des maillons du câble
 
     private LineRenderer[] lineRenderers; // Tableau des Line Renderers
 
@@ -51,11 +56,23 @@ public class CableCreation : MonoBehaviour
         for (int i = 1; i < numberOfLinks - 1; i++)
         {
             GameObject link = new GameObject("CableLink_" + i); // Créer un GameObject pour le maillon
+
+            // Ajouter un MeshFilter et assigner le mesh de la sphère
+            MeshFilter meshFilter = link.AddComponent<MeshFilter>();
+            meshFilter.mesh = sphereMesh; // Assigner le mesh de la sphère fourni
+
+            // Ajouter un MeshRenderer pour le rendu de la sphère
+            MeshRenderer meshRenderer = link.AddComponent<MeshRenderer>();
+            meshRenderer.material.color = lineColor; // Appliquer la couleur spécifiée
+
             Rigidbody linkRigidbody = link.AddComponent<Rigidbody>(); // Ajouter un composant Rigidbody pour la physique
-            //linkRigidbody.isKinematic = true; // Rendre le Rigidbody kinématique pour le mouvement contrôlé
+            linkRigidbody.mass = linkMass; // Ajout de sa masse
 
             SphereCollider collider = link.AddComponent<SphereCollider>(); // Ajouter un composant Collider
-            collider.radius = lineWidth / 2f; // Définir le rayon du collider selon l'épaisseur du câble
+            collider.radius = 1 / 2f; // Définir le rayon du collider selon l'épaisseur du câble
+
+            // Mettre à l'échelle la sphère pour correspondre à l'épaisseur du câble
+            link.transform.localScale = new Vector3(lineWidth, lineWidth, lineWidth);
 
             link.transform.position = Vector3.Lerp(startNode.transform.position, endNode.transform.position, (float)i / (numberOfLinks - 1)); // Positionner le maillon le long du câble
             cableLinks[i] = link; // Ajouter le maillon au tableau
@@ -71,19 +88,22 @@ public class CableCreation : MonoBehaviour
             cableLinkLogic.objectA = i > 0 ? cableLinks[i - 1] : null; // L'objet A est le maillon précédent, sauf pour le premier maillon
             cableLinkLogic.objectB = i < numberOfLinks - 1 ? cableLinks[i + 1] : null; // L'objet B est le maillon suivant, sauf pour le dernier maillon
             cableLinkLogic.springForce = springForce;
+            cableLinkLogic.distance = distance;
         }
 
         // Ajouter et configurer le script CableLinkLogic pour le premier maillon (startNode)
         CableLinkLogic startNodeLogic = startNode.AddComponent<CableLinkLogic>();
-        startNodeLogic.objectA = cableLinks[1]; // L'objet A du dernier maillon est le maillon précédent
-        startNodeLogic.objectB = null; // L'objet B du dernier maillon est null
+        startNodeLogic.objectA = null; // L'objet B du dernier maillon est null
+        startNodeLogic.objectB = cableLinks[1]; // L'objet A du premier maillon est le maillon suivant
         startNodeLogic.springForce = springForce;
+        startNodeLogic.distance = distance;
 
         // Ajouter et configurer le script CableLinkLogic pour le dernier maillon (endNode)
         CableLinkLogic endNodeLogic = endNode.AddComponent<CableLinkLogic>();
         endNodeLogic.objectA = cableLinks[numberOfLinks - 2]; // L'objet A du dernier maillon est le maillon précédent
         endNodeLogic.objectB = null; // L'objet B du dernier maillon est null
         endNodeLogic.springForce = springForce;
+        endNodeLogic.distance = distance;
 
         // Ajouter les Line Renderers pour tracer le câble
         lineRenderers = new LineRenderer[numberOfLinks - 1]; // Créer le tableau de Line Renderers
