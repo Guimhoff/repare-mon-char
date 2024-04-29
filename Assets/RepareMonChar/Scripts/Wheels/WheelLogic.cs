@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
@@ -8,7 +6,6 @@ public class WheelLogic : MonoBehaviour
     public float Radius = .4f;
 
     public bool Dismounted;
-    public FixedJoint joint;
 
     public MeshCollider attachedCollider;
     public MeshCollider detachedCollider;
@@ -19,9 +16,6 @@ public class WheelLogic : MonoBehaviour
 
     private void Start()
     {
-        if (joint == null)
-            joint = GetComponent<FixedJoint>();
-
         if (Socket == null && transform.parent != null)
             Socket = transform.parent.GetComponent<WheelSocket>();
 
@@ -32,7 +26,7 @@ public class WheelLogic : MonoBehaviour
     private void FixedUpdate()
     {
         if (Dismounted)
-            return;
+            GetComponent<Rigidbody>().isKinematic = false;
         else
             MountedFixedUpdate();
 
@@ -40,6 +34,7 @@ public class WheelLogic : MonoBehaviour
 
     private void MountedFixedUpdate()
     {
+        GetComponent<Rigidbody>().isKinematic = true;
         float freeSpace = Socket.AvailableFreeSpace();
 
         if (freeSpace == 0)
@@ -63,12 +58,14 @@ public class WheelLogic : MonoBehaviour
         print("Dismounting");
 
         Dismounted = true;
-        Destroy(joint);
         Socket.Dismount();
         Socket = null;
         transform.parent = null;
         GetComponent<XRGrabInteractable>().trackRotation = true;
         GetComponent<Rigidbody>().velocity = Vector3.zero;
+
+        var rb = GetComponent<Rigidbody>();
+        rb.isKinematic = false;
 
         detachedCollider.enabled = true;
         attachedCollider.enabled = false;
@@ -82,25 +79,19 @@ public class WheelLogic : MonoBehaviour
         transform.SetParent(newSocket.transform);
 
         transform.rotation = newSocket.transform.rotation;
-        Vector3 tempPos = transform.localPosition;
 
         Socket = newSocket.GetComponent<WheelSocket>();
         Socket.Mount(Radius);
+
         transform.position = newSocket.transform.position;
         //transform.localPosition = Vector3.zero;
+
         GetComponent<XRGrabInteractable>().trackRotation = false;
 
-        joint = gameObject.AddComponent<FixedJoint>();
-        ConfigureJoint(newSocket);
+        var rb = GetComponent<Rigidbody>();
+        rb.isKinematic = true;
 
         detachedCollider.enabled = false;
         attachedCollider.enabled = true;
-    }
-
-    private void ConfigureJoint(GameObject newSocket)
-    {
-        joint.connectedBody = newSocket.GetComponent<Rigidbody>();
-        joint.massScale = 100;
-        joint.connectedMassScale = 1;
     }
 }
