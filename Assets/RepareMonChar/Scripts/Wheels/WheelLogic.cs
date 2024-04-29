@@ -5,8 +5,13 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class WheelLogic : MonoBehaviour
 {
+    public float Radius = .4f;
+
     public bool Dismounted;
-    public ConfigurableJoint joint;
+    public FixedJoint joint;
+
+    public MeshCollider attachedCollider;
+    public MeshCollider detachedCollider;
 
     public WheelSocket Socket;
     
@@ -15,13 +20,13 @@ public class WheelLogic : MonoBehaviour
     private void Start()
     {
         if (joint == null)
-            joint = GetComponent<ConfigurableJoint>();
+            joint = GetComponent<FixedJoint>();
 
-        if (Socket == null)
+        if (Socket == null && transform.parent != null)
             Socket = transform.parent.GetComponent<WheelSocket>();
 
-        if (Dismounted)
-            Dismount();
+        if (!Dismounted)
+            Socket.Mount(Radius);
     }
 
     private void FixedUpdate()
@@ -35,22 +40,22 @@ public class WheelLogic : MonoBehaviour
 
     private void MountedFixedUpdate()
     {
-        if (Socket.AvailableFreeSpace() == 0)
+        float freeSpace = Socket.AvailableFreeSpace();
+
+        if (freeSpace == 0)
             GetComponent<XRGrabInteractable>().enabled = false;
         else
             GetComponent<XRGrabInteractable>().enabled = true;
+    }
 
-
+    public void GrabWheel()
+    {
         float freeSpace = Socket.AvailableFreeSpace();
 
-        if (Mathf.Abs(freeSpace - joint.linearLimit.limit) > .1f)
+        if (freeSpace > 0)
         {
-            joint.connectedAnchor = new Vector3(freeSpace, 0, 0);
-            joint.linearLimit = new SoftJointLimit { limit = freeSpace };
-        }
-
-        if (Socket.IsFree() && Vector3.Dot(transform.localPosition - joint.anchor, Axis) > Socket.FreeingSpace)
             Dismount();
+        }
     }
 
     public void Dismount()
@@ -64,6 +69,9 @@ public class WheelLogic : MonoBehaviour
         transform.parent = null;
         GetComponent<XRGrabInteractable>().trackRotation = true;
         GetComponent<Rigidbody>().velocity = Vector3.zero;
+
+        detachedCollider.enabled = true;
+        attachedCollider.enabled = false;
     }
 
     public void Mount(GameObject newSocket)
@@ -76,32 +84,23 @@ public class WheelLogic : MonoBehaviour
         transform.rotation = newSocket.transform.rotation;
         Vector3 tempPos = transform.localPosition;
 
-        transform.position = newSocket.transform.position;
         Socket = newSocket.GetComponent<WheelSocket>();
-        Socket.Mount();
-        joint = gameObject.AddComponent<ConfigurableJoint>();
-        ConfigureJoint(newSocket);
-        joint.connectedBody = newSocket.GetComponent<Rigidbody>();
-        // transform.localPosition = tempPos;
+        Socket.Mount(Radius);
+        transform.position = newSocket.transform.position;
+        //transform.localPosition = Vector3.zero;
         GetComponent<XRGrabInteractable>().trackRotation = false;
+
+        joint = gameObject.AddComponent<FixedJoint>();
+        ConfigureJoint(newSocket);
+
+        detachedCollider.enabled = false;
+        attachedCollider.enabled = true;
     }
 
     private void ConfigureJoint(GameObject newSocket)
     {
-        joint.anchor = Vector3.zero;
-        joint.autoConfigureConnectedAnchor = false;
-        joint.connectedAnchor = Vector3.zero;
-        joint.axis = Axis;
-        joint.secondaryAxis = Vector3.up;
-        joint.xMotion = ConfigurableJointMotion.Limited;
-        joint.yMotion = ConfigurableJointMotion.Locked;
-        joint.zMotion = ConfigurableJointMotion.Locked;
-        joint.angularXMotion = ConfigurableJointMotion.Locked;
-        joint.angularYMotion = ConfigurableJointMotion.Locked;
-        joint.angularZMotion = ConfigurableJointMotion.Locked;
-        joint.linearLimit = new SoftJointLimit { limit = 0.1f };
-
-        joint.massScale = 10000f;
-        joint.connectedMassScale = 1f;
+        joint.connectedBody = newSocket.GetComponent<Rigidbody>();
+        joint.massScale = 100;
+        joint.connectedMassScale = 1;
     }
 }

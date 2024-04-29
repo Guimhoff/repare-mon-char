@@ -14,6 +14,7 @@ public class WheelSocket : MonoBehaviour
     public float CatchingDistance = .05f;
 
     private Collider _triggerCollider;
+    private bool collisionLeaved = false;
 
     private void Start()
     {
@@ -52,42 +53,28 @@ public class WheelSocket : MonoBehaviour
 
     private void OnTriggerStay(Collider collision)
     {
+
+        if (collision.gameObject.GetComponent<WheelLogic>() == null)
+            return;
+
+        if (!collisionLeaved)
+            return;
         
-        if (collision.gameObject.GetComponent<WheelLogic>() != null)
+        WheelLogic wheelLogic = collision.gameObject.GetComponent<WheelLogic>();
+        if (wheelLogic.Dismounted && Vector3.Distance(collision.transform.position, transform.position) < CatchingDistance)
         {
-            WheelLogic wheelLogic = collision.gameObject.GetComponent<WheelLogic>();
-            if (wheelLogic.Dismounted && Vector3.Distance(collision.transform.position, transform.position) < CatchingDistance)
-            {
-                wheelLogic.Mount(gameObject);
-                Mount();
-            }
+            wheelLogic.Mount(gameObject);
+            //Mount();
         }
     }
 
-    private void DeactivateScrew()
+    private void OnTriggerExit(Collider collision)
     {
-        foreach (Transform child in transform)
-        {
-            if (child.name != "Screw")
-            {
-                continue;
-            }
+        if (collision.gameObject.GetComponent<WheelLogic>() == null)
+            return;
 
-            child.GetComponent<CapsuleCollider>().enabled = false;
-        }
-    }
+        collisionLeaved = true;
 
-    private void ActivateScrew()
-    {
-        foreach (Transform child in transform)
-        {
-            if (child.name != "Screw")
-            {
-                continue;
-            }
-
-            child.GetComponent<CapsuleCollider>().enabled = true;
-        }
     }
 
     public void Dismount()
@@ -95,14 +82,13 @@ public class WheelSocket : MonoBehaviour
         WheelCollider wheelCollider = GetComponent<WorldPosFromWheelCollider>().WheelCollider;
         wheelCollider.radius = DisabledRadius;
         _triggerCollider.enabled = true;
-        DeactivateScrew();
+        collisionLeaved = false;
     }
 
-    public void Mount()
+    public void Mount(float radius)
     {
         WheelCollider wheelCollider = GetComponent<WorldPosFromWheelCollider>().WheelCollider;
-        wheelCollider.radius = FullRadius;
+        wheelCollider.radius = radius;
         _triggerCollider.enabled = false;
-        ActivateScrew();
     }
 }
