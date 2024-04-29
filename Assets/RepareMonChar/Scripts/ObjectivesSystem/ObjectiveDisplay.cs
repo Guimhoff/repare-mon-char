@@ -81,7 +81,7 @@ public class ObjectiveDisplay : MonoBehaviour
 
     private void UpdateStartButtonDisplay(TimerState timerState)
     {
-        if (timerState == TimerState.Zeroed)
+        if (GMSystem.gameMode == GameMode.Timed && timerState == TimerState.Zeroed)
         {
             startButton.SetActive(true);
             return;
